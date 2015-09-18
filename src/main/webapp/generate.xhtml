@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="template.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <p:panel header="Generowanie menu">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Czy piatki z miesem ?"/>
+                    <h:selectBooleanCheckbox value="#{dishMB.meatOnFriday}"/>
+                    <h:outputText value="Wybierz tydzien"/>
+                    <p:selectOneMenu value="#{dishMB.weekNumber}">
+                        <f:selectItems value="#{dishMB.weeksNumbers}"/>
+                        <p:ajax event="change" listener="#{dishMB.calculateWeekRangeDates}" update="@form"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="Poczatek tygodnia: "/>
+                    <p:calendar value="#{dishMB.weekStartDate}" pattern="dd-MM-yyyy" locale="pl" disabled="true"/>
+                    <h:outputLabel value="koniec tygodnia: "/>
+                    <p:calendar value="#{dishMB.weekEndDate}" pattern="dd-MM-yyyy" locale="pl" disabled="true"/>
+
+                    <h:outputText value="Obecny tydzien nr"/>
+                    <h:outputText value="#{dishMB.currentWeekNumber}"/>
+                </h:panelGrid>
+                <p:commandButton value="Generuj" action="#{dishMB.generate}" update="menu"/>
+
+
+            </p:panel>
+
+
+            <h:panelGroup id="menu" layout="block">
+                <h1 align="center">Tygodniowe menu nr #{dishMB.weekNumber}</h1>
+                <p:dataTable value="#{dishMB.week.days}" var="day">
+                    <p:column>
+                        <f:facet name="header">Pierwszy posilek</f:facet>
+                        <h:outputText value="#{day.first}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Drugi posilek</f:facet>
+                        <h:outputText value="#{day.second}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Deser</f:facet>
+                        <h:outputText value="#{day.dessert}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+            <p:commandButton value="Zapisz" action="#{dishMB.save}" update="@form"/>
+            <p:commandButton value="Anuluj" action="#{dishMB.cancel}" update="@form"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

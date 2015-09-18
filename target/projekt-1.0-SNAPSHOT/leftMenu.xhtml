@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+<ui:composition>
+    <h:form>
+        <p:panelMenu id="leftMenuPanel" widgetVar="menuPanel" styleClass="leftMenuPanel">
+            <p:submenu label="Menu">
+                <p:menuitem value="Dodaj posilek" outcome="add.xhtml"
+                            icon="ui-icon-circle-plus"
+                            ajax="false">
+                </p:menuitem>
+                <p:menuitem value="Generuj menu" outcome="generate.xhtml" icon="ui-icon-circle-triangle-e"
+                            ajax="false">
+                </p:menuitem>
+                <p:menuitem value="Zobacz historie" outcome="history.xhtml" icon="ui-icon-note" ajax="false">
+                </p:menuitem>
+                <p:menuitem value="Dodaj uzytkownika" outcome="addUser.xhtml" icon="ui-icon-note" ajax="flase" rendered="#{usersMB.user.admin}">
+                </p:menuitem>
+                <p:menuitem value="Wyloguj" action="#{usersMB.logout}" icon="ui-icon-arrowreturnthick-1-w" ajax="flase">
+                </p:menuitem>
+            </p:submenu>
+        </p:panelMenu>
+    </h:form>
+</ui:composition>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="template.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <div style="width:100%; float: left; height: 100%">
+                <p:panel header="Historia generowanych menu">
+                    <p:tabView scrollable="true">
+                        <c:forEach items="${historyMB.weeks}" var="week">
+                            <p:tab title="Week #{week.weekNumber}">
+                                <h:panelGroup id="menu" layout="block">
+                                    <h:outputLabel value="Poczatek tygodnia: "/>
+                                    <p:calendar value="#{week.dateFrom}" pattern="dd-MM-yyyy" locale="pl" disabled="true"/>
+                                    <h:outputLabel value="koniec tygodnia: "/>
+                                    <p:calendar value="#{week.dateTo}" pattern="dd-MM-yyyy" locale="pl" disabled="true"/>
+                                    <p:dataTable value="#{week.days}" var="day">
+                                        <p:column>
+                                            <f:facet name="header">Pierwszy posilek</f:facet>
+                                            <h:outputText value="#{day.first}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">Drugi posilek</f:facet>
+                                            <h:outputText value="#{day.second}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">Deser</f:facet>
+                                            <h:outputText value="#{day.dessert}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGroup>
+                            </p:tab>
+                        </c:forEach>
+                    </p:tabView>
+                </p:panel>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

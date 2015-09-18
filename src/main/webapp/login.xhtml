@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head><title>Launch lunch</title></h:head>
+<link rel="stylesheet" type="text/css" href="styles.css"/>
+<h:body>
+    <h:form>
+        <div style="width: 35%; margin: 0 auto; position: absolute; left: 31%; top: 31%">
+            <p:panel header="Podaj nazwe uzytkownika i haslo" resizable="false" style="height: 150px;">
+                <div style="width: 60%; margin: 1% auto">
+                    <div style="width: 50%; float: left">
+                        <h:outputLabel id="username" value="Nazwa uzytkownika: *"/>
+                    </div>
+                    <div style="width: 50%; float: left">
+                        <h:inputText value="#{usersMB.username}" required="true" maxlength="50"/><br/>
+                    </div>
+                </div>
+                <div style="width: 60%; margin: 0 auto; margin-top: 35px">
+                    <div style="width: 50%; float: left">
+                        <h:outputLabel id="password" value="Haslo: *"/>
+                    </div>
+                    <div style="width: 50%; float: left;">
+                        <h:inputSecret value="#{usersMB.password}" required="true" maxlength="50"/><br/>
+                    </div>
+                </div>
+                <div style="width: 100%; float: left;">
+                    <div style="width: 20%; margin: 3% auto;">
+                        <p:commandButton value="ZALOGUJ" action="#{usersMB.login}"/>
+                    </div>
+                </div>
+            </p:panel>
+        </div>
+    </h:form>
+</h:body>
+</html>
+

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="template.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <div style="width: 100%; height: 170px; margin: 0 auto">
+                <h:panelGroup id="addPanel" layout="block">
+                    <p:panel style="height: 170px">
+                        <f:facet name="header">
+                            <h:outputText value="Dodawanie posilku"/>
+                        </f:facet>
+                        <div style="width: 100%; margin: 1% auto">
+                            <div style="width: 15%; float: left">
+                                <h:outputLabel id="name" value="Nazwa posilku: *"/>
+                            </div>
+                            <div style="width: 85%; float: left">
+                                <h:inputText value="#{mealMB.mealName}" required="true" maxlength="100"/>
+                                <br/>
+                                <p:message id="nameMsg" for="name"/>
+                            </div>
+                        </div>
+                        <div style="width: 100%; margin: 1% auto">
+                            <div style="width: 15%; float: left">
+                                <h:outputLabel for="mealPosition" value="Pozycja posilku: *"/>
+                            </div>
+                            <div style="width: 85%; float: left">
+                                <p:selectOneMenu id="mealPosition" value="#{mealMB.mealPosition}">
+                                    <f:selectItem itemLabel="Wybierz pozycje" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{mealMB.positions}"/>
+                                </p:selectOneMenu>
+                                <br/>
+                            </div>
+                        </div>
+                        <div style="width: 100%; margin: 1% auto">
+                            <div style="width: 15%; float: left">
+                                <h:outputLabel id="typeMeal" value="Typ posilku: *"/>
+                            </div>
+                            <div style="width: 85%; float: left">
+                                <p:selectOneMenu value="#{mealMB.mealTypeId}">
+                                    <f:selectItem itemLabel="Wybierz typ" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{mealMB.mealTypes}" var="type" itemLabel="#{type.type}"
+                                                   itemValue="#{type.id}"/>
+                                </p:selectOneMenu>
+                                <br/>
+                            </div>
+                        </div>
+                        <div style="width: 100%; margin: 1% auto">
+                            <div style="width: 50%; float: left; margin: 1% auto">
+                                <p:commandButton id="addMeal" value="Dodaj posilek" action="#{mealMB.addMeal}" partialSubmit="true"
+                                                 process="form:addPanel" update="form:mealsList"/>
+                            </div>
+                        </div>
+                    </p:panel>
+                </h:panelGroup>
+            </div>
+
+
+            <h:panelGroup id="mealsList" layout="block">
+                <f:facet name="header">
+                    <h:outputText value="Lista posilkow"/>
+                </f:facet>
+                <p:dataTable value="#{mealMB.meals}" var="meal">
+                    <p:column>
+                        <f:facet name="header">Nazwa posilku</f:facet>
+                        <h:outputText value="#{meal.name}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Pozycja posilku</f:facet>
+                        <h:outputText value="#{meal.mealPosition}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Typ posilku</f:facet>
+                        <h:outputText value="#{meal.mealType.type}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Akcje</f:facet>
+                        <p:commandButton value="Edytuj" action="#{mealMB.edit(meal.id)}" process="@this"
+                                         update=":form:editPanel"/>
+                        <p:commandButton value="Usun" action="#{mealMB.delete(meal.id)}" process="@this"
+                                         update=":form:mealsList"/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+
+
+            <p:dialog id="editPanel" modal="true" closeOnEscape="true" header="Edycja posilkow" resizable="false"
+                      widgetVar="editDialog" width="60%" height="30%" closable="true">
+                <div style="width: 100%; float:left; height: 50px;">
+                    <div style="width: 50%; float:left;">
+                        <div style="width: 50%; float: left">
+                            <h:outputLabel id="editName" value="Nazwa posilku: *"/>
+                        </div>
+                        <div style="width: 50%; float: left">
+
+                            <h:inputText value="#{mealMB.mealToEdit.name}" required="true" maxlength="100"/>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; float:left; height: 50px;">
+                    <div style="width: 50%; float:left;">
+                        <div style="width: 50%; float: left">
+                            <h:outputLabel for="editNealPosition" value="Pozycja posilku: *"/>
+                        </div>
+                        <div style="width: 50%; float: left">
+
+                            <p:selectOneMenu id="editNealPosition" value="#{mealMB.mealToEdit.mealPosition}">
+                                <f:selectItems value="#{mealMB.positions}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; float:left; height: 50px;">
+                    <div style="width: 50%; float:left;">
+                        <div style="width: 50%; float: left">
+                            <h:outputLabel id="editTypeMeal" value="Typ posilku: *"/>
+                        </div>
+                        <div style="width: 50%; float: left">
+
+                            <p:selectOneMenu value="#{mealMB.mealToEditTypeId}">
+                                <f:selectItems value="#{mealMB.mealTypes}" var="type" itemLabel="#{type.type}"
+                                               itemValue="#{type.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 30%; float: right">
+                    <div style="width: 20%; float: right">
+                        <p:commandButton value="Anuluj" process="@this" oncomplete="PF('editDialog').hide();"/>
+                    </div>
+                    <div style="width: 30%; float: right">
+                        <p:commandButton value="Aktualizuj" action="#{mealMB.updateMeal}" process="@parent"
+                                         update=":form:mealsList"/>
+                    </div>
+                </div>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

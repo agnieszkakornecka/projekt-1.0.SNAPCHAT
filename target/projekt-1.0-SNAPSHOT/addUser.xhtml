@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+        >
+
+<ui:composition template="template.xhtml">
+    <ui:define name="content">
+        <h:form>
+
+            <p:panel header="Podaj nazwe uzytkownika i haslo" resizable="false" style="height: 150px;">
+                <div style="width: 60%; margin: 1% auto">
+                    <div style="width: 50%; float: left">
+                        <h:outputLabel id="username" value="Nazwa uzytkownika: *"/>
+                    </div>
+                    <div style="width: 50%; float: left">
+                        <h:inputText value="#{addUserMB.username}" required="true" maxlength="50"/><br/>
+                    </div>
+                </div>
+                <div style="width: 60%; margin: 0 auto; margin-top: 35px">
+                    <div style="width: 50%; float: left">
+                        <h:outputLabel id="password" value="Haslo: *"/>
+                    </div>
+                    <div style="width: 50%; float: left;">
+                        <h:inputSecret value="#{addUserMB.password}" required="true" maxlength="50"/><br/>
+                    </div>
+                </div>
+                <div style="width: 60%; margin: 0 auto; margin-top: 35px">
+                    <div style="width: 50%; float: left">
+                        <h:outputLabel id="confirmation" value="Potwierdź: *"/>
+                    </div>
+                    <div style="width: 50%; float: left;">
+                        <h:inputSecret value="#{addUserMB.confirmation}" required="true" maxlength="50"/><br/>
+                    </div>
+                </div>
+                <div style="width: 60%; margin: 0 auto; margin-top: 35px">
+                    <div style="width: 50%; float: left">
+                        <h:outputLabel id="admin" value="Czy Administrator:"/>
+                    </div>
+                    <div style="width: 50%; float: left;">
+                        <p:selectBooleanCheckbox value="#{addUserMB.admin}"/>
+                    </div>
+                </div>
+                <div style="width: 100%; float: left;">
+                    <div style="width: 20%; margin: 3% auto;">
+                        <p:commandButton value="Dodaj" action="#{addUserMB.addUser}"/>
+                    </div>
+                </div>
+            </p:panel>
+
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
